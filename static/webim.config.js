@@ -19,7 +19,7 @@ WebIM.config = {
      * Application AppKey
      */
     // appkey: '1176171101115943#pinke',
-    appkey: 'easemob-demo#chatdemoui',
+    appkey: '1176171101115943#pinke',
 
     /*
      * Whether to use wss

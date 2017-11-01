@@ -1,6 +1,6 @@
 # vue-easemob
 
-> A Vue.js project
+> 基于环信 WebIM 和 Vue 的 demo。
 
 ## Build Setup
 
