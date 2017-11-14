@@ -1,11 +1,35 @@
 <template>
-    <div class="page-home">
-        <mu-paper>
+    <div class="page page-home">
+        <header class="page-header">
+            <mu-appbar title="微信">
+                <mu-icon-button icon="menu" slot="left"/>
+                <mu-icon-button icon="search" slot="right"/>
+                <mu-icon-menu icon="add" slot="right">
+                    <mu-menu-item title="菜单 1"/>
+                    <mu-menu-item title="菜单 2"/>
+                    <mu-menu-item title="菜单 3"/>
+                    <mu-menu-item title="菜单 4"/>
+                    <mu-menu-item title="菜单 5"/>
+                </mu-icon-menu>
+            </mu-appbar>
+        </header>
+        <div class="page-body">
             <router-link to="/register">注册</router-link>
             <router-link to="/login">登录</router-link>
 
             <input v-model="name" placeholder="好友账号">
             <button @click="addFriend">添加好友</button>
+            <mu-list>
+                <mu-sub-header>消息列表</mu-sub-header>
+                <mu-list-item :title="message.from"
+                              :describeText="message.data"
+                              @click="chat(message)"
+                              v-for="message in messages">
+                    <mu-avatar src="/static/img/avatar.jpg" slot="leftAvatar"/>
+
+                    <mu-icon value="chat_bubble" slot="right"/>
+                </mu-list-item>
+            </mu-list>
             <mu-list>
                 <mu-sub-header>好友</mu-sub-header>
                 <mu-list-item :title="ro.name" v-for="ro in roster">
@@ -24,73 +48,97 @@
                     <mu-icon value="chat_bubble" slot="right"/>
                 </mu-list-item>
             </mu-list>
+        </div>
+        <footer class="page-footer">
             <mu-bottom-nav :value="bottomNav" @change="handleChange">
-                <mu-bottom-nav-item value="recents" title="Recents" icon="restore"/>
-                <mu-bottom-nav-item value="favorites" title="Favorites" icon="favorite"/>
-                <mu-bottom-nav-item value="nearby" title="Nearby" icon="location_on"/>
+                <mu-bottom-nav-item value="recents" title="消息" icon="restore"/>
+                <mu-bottom-nav-item value="favorites" title="联系人" icon="favorite" to="/contacts"/>
+                <mu-bottom-nav-item value="nearby" title="我" icon="location_on"/>
             </mu-bottom-nav>
-        </mu-paper>
+        </footer>
     </div>
 </template>
 
 <script>
+    import im from '@/util/im'
+
     export default {
         data () {
             return {
+                messages: [],
                 roster: [],
                 groups: [],
-                username: 'yunser',
+                username: '15602229283',
                 password: '123456',
-                name: 'yunser',
+                name: '15602229283',
                 bottomNav: 'recents'
             }
         },
         mounted() {
+            this.username = this.$storage.get('username') || '15602229283'
+
+            // 自动登录
             console.log('登录'+localStorage.token)
             if (!localStorage.user) {
 //                this.$router.push('/login')
             }
-            // 获取好友列表
-            conn.getRoster({
-                success: roster => {
-                    console.log('121212')
-                    console.log(roster)
-                    this.roster = roster
-                    //获取好友列表，并进行好友列表渲染，roster格式为：
-                    /** [
-                     {
-                       jid:'asemoemo#chatdemoui_test1@easemob.com',
-                       name:'test1',
-                       subscription: 'both'
-                     }
-                     ]
-                     */
 
-                    for (var i = 0, l = roster.length; i < l; i++) {
-                        var ros = roster[i];
-                        //ros.subscription值为both/to为要显示的联系人，此处与APP需保持一致，才能保证两个客户端登录后的好友列表一致
-                        if (ros.subscription === 'both' || ros.subscription === 'to') {
+            im.login(this.username, () => {
+                // 获取好友列表
+                conn.getRoster({
+                    success: roster => {
+                        console.log('121212')
+                        console.log(roster)
+                        this.roster = roster
+                        //获取好友列表，并进行好友列表渲染，roster格式为：
+                        /** [
+                         {
+                           jid:'asemoemo#chatdemoui_test1@easemob.com',
+                           name:'test1',
+                           subscription: 'both'
+                         }
+                         ]
+                         */
 
+                        for (var i = 0, l = roster.length; i < l; i++) {
+                            var ros = roster[i];
+                            //ros.subscription值为both/to为要显示的联系人，此处与APP需保持一致，才能保证两个客户端登录后的好友列表一致
+                            if (ros.subscription === 'both' || ros.subscription === 'to') {
+
+                            }
                         }
-                    }
-                },
-                error: err => {
-                    console.log('获取好友失败')
-                    console.log(err)
-                },
-            })
-            // 列出当前登录用户加入的所有群组
-            conn.getGroup({
-                success: resp => {
-                    console.log("Response: ", resp)
-                    this.groups = resp.data
-                },
-                error: e => {
+                    },
+                    error: err => {
+                        console.log('获取好友失败')
+                        console.log(err)
+                    },
+                })
 
-                }
+                // 列出当前登录用户加入的所有群组
+                conn.getGroup({
+                    success: resp => {
+                        console.log("Response: ", resp)
+                        this.groups = resp.data
+                    },
+                    error: e => {
+                        console.log('获取群组失败')
+                    }
+                })
+
+                // 获取本地消息列表
+                this.messages = im.getMessages()
+
+                im.setListener(message => {
+                    console.log('要死了')
+                    console.log(message)
+                    this.messages = im.getMessages()
+                })
             })
         },
         methods: {
+            chat(message) {
+                this.$router.push('/users/' + message.from + '/chat')
+            },
             groupChat(group) {
                 console.log(group)
                 this.$router.push(`/groups/${group.groupid}/chat`)

@@ -76,7 +76,4 @@
 </script>
 
 <style>
-    .page-body {
-        padding: 0 40px;
-    }
 </style>

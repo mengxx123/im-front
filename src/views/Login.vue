@@ -8,7 +8,7 @@
                 <div>
                     <h2>登录</h2>
                     <mu-text-field v-model="username" hintText="提示文字"/><br/>
-                    <mu-text-field v-model="password" hintText="提示文字"/><br/>
+                    <mu-text-field v-model="username" hintText="提示文字"/><br/>
                     <mu-flat-button icon="android" class="demo-flat-button" label="登录" @click="login" backgroundColor="#a4c639" color="#FFF" />
                 </div>
             </div>
@@ -18,20 +18,25 @@
 </template>
 
 <script>
+//    import im from '@/util/im'
+
     export default {
         data () {
             return {
-                username: 'yunser',
+                username: this.$storage.get('username') || '15602229283',
                 password: '123456',
                 toast: false
             }
         },
         methods: {
             login() {
+                this.$storage.set('username', this.username)
+
+//                im.login(this.username)
                 var options = {
                     apiUrl: WebIM.config.apiURL,
                     user: this.username,
-                    pwd: this.password,
+                    pwd: this.username,
                     appKey: WebIM.config.appkey,
                     success: () => {
                         localStorage.user = this.username
@@ -45,7 +50,7 @@
     }
 </script>
 
-<style>
+<style scoped="">
     .page-body {
         padding: 0 40px;
     }
