@@ -1,33 +1,38 @@
 <template>
     <div class="page-register">
-        <mu-appbar title="联系人">
+        <mu-appbar title="我">
             <mu-icon-button icon="menu" slot="left"/>
         </mu-appbar>
         <div class="page-body">
             <div>
                 <mu-list>
-                    <mu-list-item title="Mike Li">
-                        <mu-avatar src="/static/img/avatar-1.png" slot="rightAvatar"/>
+                    <mu-list-item title="朋友圈">
                         <mu-icon value="grade" slot="left" color="pinkA200"/>
-                    </mu-list-item>
-                    <mu-list-item title="Maco Mai" inset>
-                        <mu-avatar src="/static/img/avatar-2.png" slot="rightAvatar"/>
-                    </mu-list-item>
-                    <mu-list-item title="Alex Qin" inset>
-                        <mu-avatar src="/static/img/avatar-3.png" slot="rightAvatar"/>
                     </mu-list-item>
                 </mu-list>
                 <mu-divider inset/>
                 <mu-list>
-                    <mu-list-item title="Myron Liu">
-                        <mu-avatar src="/images/uicon.jpg" slot="rightAvatar"/>
-                        <mu-avatar color="pinkA200" :style="{'margin-left': '-8px'}" backgroundColor="transparent" slot="leftAvatar">A</mu-avatar>
+                    <mu-list-item title="扫一扫" inset>
+                        <mu-icon value="grade" slot="left" color="pinkA200"/>
                     </mu-list-item>
-                    <mu-list-item title="Gaia Zhou" inset>
-                        <mu-avatar src="/images/avatar5.jpg" slot="rightAvatar"/>
+                    <mu-list-item title="摇一摇" inset>
+                        <mu-icon value="grade" slot="left" color="pinkA200"/>
                     </mu-list-item>
-                    <mu-list-item title="Miller Wang" inset>
-                        <mu-avatar src="/images/avatar6.jpg" slot="rightAvatar"/>
+                </mu-list>
+                <mu-divider inset/>
+                <mu-list>
+                    <mu-list-item title="附近的人" inset>
+                        <mu-icon value="grade" slot="left" color="pinkA200"/>
+                    </mu-list-item>
+                    <mu-list-item title="漂流瓶" inset>
+                        <mu-icon value="grade" slot="left" color="pinkA200"/>
+                    </mu-list-item>
+                </mu-list>
+                <mu-divider inset/>
+                <mu-list>
+                    <mu-list-item title="购物" inset>
+                        <mu-icon value="grade" slot="left" color="pinkA200"/>
+                        <mu-badge content="new" slot="after" secondary />
                     </mu-list-item>
                 </mu-list>
             </div>

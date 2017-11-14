@@ -8,10 +8,11 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import storage from '@/util/storage'
 import im from '@/util/im'
-
+import ui from './components'
 import './scss/main.scss'
 
 Vue.use(MuseUI)
+Vue.use(ui)
 
 // import './sdk/dist/strophe-1.2.8.min'
 Vue.config.productionTip = false

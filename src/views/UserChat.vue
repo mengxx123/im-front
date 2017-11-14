@@ -1,6 +1,7 @@
 <template>
     <div class="page-register">
         <mu-appbar title="用户聊天">
+            <mu-icon-button icon="arrow_back" slot="left" @click="$router.go(-1)" />
         </mu-appbar>
         <div class="page-body">
             <mu-list>

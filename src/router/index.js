@@ -6,6 +6,8 @@ const Register = resolve => require(['@/views/Register'], resolve)
 const Login = resolve => require(['@/views/Login'], resolve)
 const UserChat = resolve => require(['@/views/UserChat'], resolve)
 const GroupChat = resolve => require(['@/views/GroupChat'], resolve)
+const Contacts = resolve => require(['@/views/Contacts'], resolve)
+const Mine = resolve => require(['@/views/Mine'], resolve)
 
 Vue.use(Router)
 
@@ -30,6 +32,12 @@ export default new Router({
         }, {
             path: '/groups/:id/chat',
             component: GroupChat
+        }, {
+            path: '/contacts',
+            component: Contacts
+        }, {
+            path: '/mine',
+            component: Mine
         }
     ]
 })

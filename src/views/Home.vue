@@ -2,7 +2,7 @@
     <div class="page page-home">
         <header class="page-header">
             <mu-appbar title="微信">
-                <mu-icon-button icon="menu" slot="left"/>
+                <mu-icon-button icon="menu" slot="left"  @click="toggle(true)"/>
                 <mu-icon-button icon="search" slot="right"/>
                 <mu-icon-menu icon="add" slot="right">
                     <mu-menu-item title="菜单 1"/>
@@ -49,13 +49,34 @@
                 </mu-list-item>
             </mu-list>
         </div>
-        <footer class="page-footer">
-            <mu-bottom-nav :value="bottomNav" @change="handleChange">
-                <mu-bottom-nav-item value="recents" title="消息" icon="restore"/>
-                <mu-bottom-nav-item value="favorites" title="联系人" icon="favorite" to="/contacts"/>
-                <mu-bottom-nav-item value="nearby" title="我" icon="location_on"/>
-            </mu-bottom-nav>
-        </footer>
+        <ui-footer></ui-footer>
+        <mu-drawer :open="open" :docked="docked" @close="toggle()">
+            <mu-list @itemClick="docked ? '' : toggle()">
+                <mu-list-item title="个人资料">
+                    <mu-icon value="chat_bubble" slot="left"/>
+                </mu-list-item>
+                <mu-list-item title="相册">
+                    <mu-icon value="photo" slot="left"/>
+                </mu-list-item>
+                <mu-list-item title="收藏">
+                    <mu-icon value="collections" slot="left"/>
+                </mu-list-item>
+                <mu-list-item title="表情">
+                    <mu-icon value="tag_faces" slot="left"/>
+                </mu-list-item>
+                <mu-list-item title="表情">
+                    <mu-icon value="chat_bubble" slot="left"/>
+                </mu-list-item>
+                <mu-list-item title="钱包">
+                    <mu-icon value="chat_bubble" slot="left"/>
+                </mu-list-item>
+                <mu-list-item title="设置">
+                    <mu-icon value="chat_bubble" slot="left"/>
+                    <mu-badge content="new" slot="after" secondary />
+                </mu-list-item>
+                <mu-list-item v-if="docked" @click.native="open = false" title="Close"/>
+            </mu-list>
+        </mu-drawer>
     </div>
 </template>
 
@@ -71,7 +92,8 @@
                 username: '15602229283',
                 password: '123456',
                 name: '15602229283',
-                bottomNav: 'recents'
+                open: false,
+                docked: true
             }
         },
         mounted() {
@@ -136,6 +158,10 @@
             })
         },
         methods: {
+            toggle (flag) {
+                this.open = !this.open
+                this.docked = !flag
+            },
             chat(message) {
                 this.$router.push('/users/' + message.from + '/chat')
             },
