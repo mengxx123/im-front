@@ -1,0 +1,14 @@
+$primary: #7e57c2;
+$line: #eee;
+$bg: #f1f1f1;
+
+@mixin clearfix {
+    &:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        line-height: 0;
+        overflow: hidden;
+    }
+}

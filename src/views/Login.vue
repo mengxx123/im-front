@@ -18,33 +18,41 @@
 </template>
 
 <script>
-//    import im from '@/util/im'
+    import im from '@/util/im'
 
     export default {
         data () {
             return {
-                username: this.$storage.get('username') || '15602229283',
-                password: '123456',
+                username: this.$storage.get('username') || '9',
+                password: '9',
                 toast: false
             }
+        },
+        mounted() {
+            im.init()
         },
         methods: {
             login() {
                 this.$storage.set('username', this.username)
 
-//                im.login(this.username)
-                var options = {
-                    apiUrl: WebIM.config.apiURL,
-                    user: this.username,
-                    pwd: this.username,
-                    appKey: WebIM.config.appkey,
-                    success: () => {
-                        localStorage.user = this.username
-                        console.log('跳转')
-                        this.$router.push('/')
-                    }
-                }
-                conn.open(options)
+                im.login(this.username, () => {
+                    localStorage.user = this.username
+                    console.log('登录成功')
+                    console.log('跳转')
+                    this.$router.push('/home')
+                })
+//
+////                im.login(this.username)
+//                var options = {
+//                    apiUrl: WebIM.config.apiURL,
+//                    user: this.username,
+//                    pwd: this.username,
+//                    appKey: WebIM.config.appkey,
+//                    success: () => {
+//
+//                    }
+//                }
+//                conn.open(options)
             }
         }
     }

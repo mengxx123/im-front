@@ -1,6 +1,17 @@
-# vue-easemob
+# 云设 IM
 
 > 基于环信 WebIM 和 Vue 的 demo。
+
+## 功能
+
+* 获取好友列表。
+* 获取群组列表。
+* 聊天记录本地存储。
+* 添加好友。
+
+## TODO
+
+* 
 
 ## Build Setup
 
