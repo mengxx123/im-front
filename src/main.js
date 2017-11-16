@@ -9,7 +9,7 @@ import 'muse-ui/dist/muse-ui.css'
 import storage from '@/util/storage'
 import im from '@/util/im'
 import ui from './components'
-import './scss/main.scss'
+import './scss/index.scss'
 
 Vue.use(MuseUI)
 Vue.use(ui)

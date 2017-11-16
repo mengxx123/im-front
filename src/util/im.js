@@ -16,24 +16,7 @@ var options2 = {
 // conn.registerUser(options2);
 
 let im = {
-    messages: [
-        {
-            data: "1212",
-            from: "admin",
-            id: "399760244995003508",
-            type: "text"
-        }, {
-            data: "1212",
-            from: "15602229284",
-            id: "399760244995003508",
-            type: "chat"
-        }, {
-            data: "1212",
-            from: "15602229283",
-            id: "399760244995003508",
-            type: "chat"
-        }
-    ],
+    messages: [],
     isInit: false,
     username: '',
     asd: 'asd',
@@ -75,16 +58,27 @@ let im = {
             },
             onTextMessage: message => {
                 console.log('收到文本消息', message)
-                // 把文本消息写入本地存储
-                if (message.type === 'chat') {
-                    console.log('添加')
-
-                    // 单用户消息
-                    this.addUserMessage(message, message.from)
+                let msg
+                if (message.from === 'admin') {
+                    msg = {
+                        type: 'text',
+                        data: message.data,
+                        from: 'admin',
+                        to: message.to,
+                        time: new Date().getTime()
+                    }
+                } else {
+                    msg = JSON.parse(message.data)
                 }
+
+                console.log(msg)
+                // 把消息写入本地存储
+                console.log('添加')
+                // 单用户消息
+                this.addUserMessage(msg, msg.from)
                 console.log('更新本地消息列表')
                 // 更新消息列表
-                this.addMessage(message)
+                this.addMessage(msg)
                 console.log('更新本地消息列表2')
 
                 this.callbackAll()
@@ -190,25 +184,32 @@ let im = {
         };
         conn.registerUser(options);
     },
-    send(to, text) {
-
+    // 发送文本消息
+    sendText(to, text) {
+        im.send(to, {
+            type: 'text', // 文本消息
+            data: text
+        })
+    },
+    send(to, message) {
         let id = conn.getUniqueId() // 生成本地消息id
         let msg = new WebIM.message('txt', id) // 创建文本消息
-        console.log(`发送${text}给${to}`)
+        console.log(`发送${JSON.stringify(message)}给${to}`)
+        // 补充其他信息
+        message.id = '' + new Date().getTime()
+        message.time = new Date().getTime()
+        message.from = this.username
+        message.to = to
+
         msg.set({
-            msg: text,
+            msg: JSON.stringify(message),
             to: to,
             roomType: false,
             success: (id, serverMsgId) => {
                 console.log('发送成功')
                 // 发送成功后，写入本地存储
                 console.log('发送测试', this.username)
-                this.addUserMessage({
-                    data: text,
-                    from: this.username,
-                    id: '' + new Date().getTime(),
-                    type: 'chat'
-                }, to)
+                this.addUserMessage(message, to)
                 console.log('发送完成')
                 this.callbackAll()
                 console.log('发送完成2')
@@ -222,64 +223,63 @@ let im = {
     },
     // 把消息添加到消息列表
     addMessage(message) {
-        if (message.type === 'chat') {
-            console.log('添加')
-            console.log(this.messages)
-            // 查找消息列表是否已经有对应用户的消息，没有则
-            let find = false
-            for (let i = 0; i < this.messages.length; i++) {
-                let msg = this.messages[i]
-                if (msg.from === message.from) {
-                    console.log('找到了')
+        console.log('添加')
+        console.log(this.messages)
+        // 查找消息列表是否已经有对应用户的消息，没有则
+        let find = false
+        for (let i = 0; i < this.messages.length; i++) {
+            let msg = this.messages[i]
+            if (msg.from === message.from) {
+                console.log('找到了')
 
-                    let targetMsg = this.messages[i]
-                    targetMsg.data = message.data
-                    targetMsg.number = 1
-                    targetMsg.time = new Date().getTime()
+                let targetMsg = this.messages[i]
+                targetMsg.data = message.data
+                targetMsg.number = 1
+                targetMsg.time = new Date().getTime()
 
-                    this.messages.splice(i, 1)
-                    this.messages.unshift(targetMsg) // TODO
-                    find = true
-                }
+                this.messages.splice(i, 1)
+                this.messages.unshift(targetMsg) // TODO
+                find = true
             }
-            if (!find) {
-                this.messages.push({
-                    data: message.data,
-                    from: message.from,
-                    id: "399760244995003508",
-                    type: "chat",
-                    time: new Date().getTime()
-                })
-            }
-            console.log('添加完成', this.messages)
-            // 消息数量最多保存 10 条
-            if (this.messages.length > 10) {
-                this.messages = this.messages.slice(0, 9)
-            }
-            storage.set('messages', this.messages)
         }
+        if (!find) {
+            this.messages.push({
+                data: message.data,
+                from: message.from,
+                id: "399760244995003508",
+                type: message.type,
+                time: new Date().getTime()
+            })
+        }
+        console.log('添加完成', this.messages)
+        // 消息数量最多保存 10 条
+        if (this.messages.length > 10) {
+            this.messages = this.messages.slice(0, 9)
+        }
+        storage.set('messages', this.messages)
     },
     getMessages() {
+        console.log('获取消息列表')
         let messages = storage.get('messages')
         if (!messages) {
             messages = [
-                // 测试消息
-                // {
-                //     data: "1212",
-                //     from: "admin",
-                //     id: "399760244995003508",
-                //     type: "chat"
-                // }, {
-                //     data: "1212",
-                //     from: "15602229284",
-                //     id: "399760244995003508",
-                //     type: "chat"
-                // }, {
-                //     data: "1212",
-                //     from: "15602229283",
-                //     id: "399760244995003508",
-                //     type: "chat"
-                // }
+                {
+                    id: "399760244995003508",
+                    type: "text",
+                    data: "1212",
+                    from: "admin",
+                }, {
+                    // 测试消息
+                    data: "1212",
+                    from: "15602229284",
+                    id: "399760244995003508",
+                    type: "chat"
+                }, {
+                    data: "1212",
+                    from: "15602229283",
+                    id: "399760244995003508",
+                    type: "chat"
+                }
             ]
         }
         console.log('排序', messages)
@@ -301,6 +301,57 @@ let im = {
         })
     },
     getUserMessage(name) {
+        // 调试
+        if (false) {
+            return [
+                {
+                    id: '1',
+                    type: 'text',
+                    data: '这是文本消息',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'asd',
+                    data: '100',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'red_packet',
+                    data: '恭喜发财，大吉大利',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'location',
+                    data: {
+                        longitude: 113.388866,
+                        latitude: 23.108985,
+                        image: 'http://api.map.baidu.com/staticimage/v2?ak=WMw0x6K1pOpQhlNmKOZK0GUP&mcode=666666&center=113.388866,23.108985&width=300&height=200&zoom=13'
+                    },
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'image',
+                    data: 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'image',
+                    data: '/static/img/test.gif',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'video',
+                    data: 'http://www.w3school.com.cn/i/movie.mp4',
+                    from: '15601119182'
+                }
+            ]
+        }
         let key = 'user-' + name + '-message'
         let userMessage = storage.get(key)
         if (!userMessage) {
@@ -317,10 +368,12 @@ let im = {
             userMessage = []
         }
         userMessage.push({
+            id: message.id,
+            type: message.type,
             data: message.data,
             from: message.from,
-            id: "399760244995003508",
-            type: "chat"
+            to: message.to,
+            time: message.time
         })
         storage.set(key, userMessage)
         console.log('保存' + key)

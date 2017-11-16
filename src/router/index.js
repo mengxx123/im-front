@@ -5,6 +5,7 @@ const Home = resolve => require(['@/views/Home'], resolve)
 const Register = resolve => require(['@/views/Register'], resolve)
 const Login = resolve => require(['@/views/Login'], resolve)
 const UserChat = resolve => require(['@/views/UserChat'], resolve)
+const UserDetail = resolve => require(['@/views/UserDetail'], resolve)
 const GroupChat = resolve => require(['@/views/GroupChat'], resolve)
 const Contacts = resolve => require(['@/views/Contacts'], resolve)
 const Mine = resolve => require(['@/views/Mine'], resolve)
@@ -26,6 +27,9 @@ export default new Router({
         }, {
             path: '/register',
             component: Register
+        }, {
+            path: '/users/:id',
+            component: UserDetail
         }, {
             path: '/users/:id/chat',
             component: UserChat

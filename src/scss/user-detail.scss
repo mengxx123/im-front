@@ -1,0 +1,12 @@
+@import "var";
+
+.page-user-detail {
+    .page-header {
+        height: 252px;
+        background-size: 100% 100%;
+        .app-bar {
+            background-color: transparent;
+            box-shadow: none;
+        }
+    }
+}

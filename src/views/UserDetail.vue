@@ -1,10 +1,11 @@
 <template>
-    <div class="page page-user-chat">
-        <header class="page-header">
-            <mu-appbar title="用户聊天">
+    <div class="page page-user-detail">
+        <header class="page-header" style="background-image: url('/static/img/location.png')">
+            <mu-appbar class="app-bar" title="用户聊天">
                 <mu-icon-button icon="arrow_back" slot="left" @click="$router.go(-1)" />
-                <mu-icon-button icon="person" slot="right" @click="viewUser" />
+                <mu-icon-button icon="more_vert" slot="right" />
             </mu-appbar>
+            <mu-avatar src="/static/img/avatar.png"/>
         </header>
         <main class="page-body">
             <div id="chat-msg-list" class="chat-msg-list">
@@ -23,10 +24,6 @@
                         <div class="content content-location" v-else-if="message.type === 'location'">
                             <div class="address">海珠区琶洲保利天悦·叁悦广场西北</div>
                             <img class="img" :src="message.data.image">
-                        </div>
-                        <div class="content content-video" v-else-if="message.type === 'video'">
-                            <img class="thumbnail" src="/static/img/red-packet.png">
-                            <mu-icon value="play_arrow" color="#ffffff" :size="48"/>
                         </div>
                         <div class="content content-red-packet" v-else-if="message.type === 'red_packet'">
                             <img class="red-packet" src="/static/img/red-packet.png">
@@ -47,32 +44,6 @@
                 <button @click="send">发送</button>
                 <button @click="sendbaidu">发送百度图片</button>
                 <button @click="sendVideo">发送视频消息</button>
-                <ul class="tool-list">
-                    <li class="item">
-                        <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="">相册</div>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="相册"></div>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="相册"></div>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="相册"></div>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </main>
         <mu-toast v-if="toast" message="注册失败" @close="hideToast"/>
@@ -101,21 +72,18 @@
                     this.messages[i].timeTag = '早上10:18'
                 }
             }
-            setTimeout(() => {
-                this.scrollToBottom()
-            }, 500)
-
             im.setListener(() => {
                 console.log('列表应该更新啦')
                 this.messages = im.getUserMessage(this.$route.params.id)
             })
         },
         methods: {
-            viewUser() {
-                this.$router.push('/users/' + this.$route.params.id)
-            },
             send() {
-                im.sendText(this.$route.params.id, this.text)
+                im.send(this.$route.params.id, {
+                    type: 'text',  // 文本消息
+                    data: this.text,
+                    time: new Date().getTime() // 发送时间
+                })
                 this.text = ''
                 this.scrollToBottom()
             },
