@@ -1,3 +1,5 @@
+// im.js 通用的即时通讯模块
+
 import storage from '@/util/storage'
 
 let WebIM = window.WebIM
@@ -19,7 +21,7 @@ let im = {
             data: "1212",
             from: "admin",
             id: "399760244995003508",
-            type: "chat"
+            type: "text"
         }, {
             data: "1212",
             from: "15602229284",
@@ -189,6 +191,7 @@ let im = {
         conn.registerUser(options);
     },
     send(to, text) {
+
         let id = conn.getUniqueId() // 生成本地消息id
         let msg = new WebIM.message('txt', id) // 创建文本消息
         console.log(`发送${text}给${to}`)

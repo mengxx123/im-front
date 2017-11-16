@@ -59,9 +59,17 @@
         },
         methods: {
             send() {
-                im.send(this.$route.params.id, this.text)
+                im.send(this.$route.params.id, {
+                    type: 'text',  // 文本消息
+                    msg: 'this.text',
+                    time: new Date().getTime() // 发送时间
+                })
                 this.text = ''
-                document.getElementById('chat-msg-list')
+                // 页面滚动到顶部
+                let msgList = document.getElementById('chat-msg-list')
+                console.log(msgList.offsetHeight)
+                msgList.scrollTop = msgList.scrollHeight + msgList.offsetHeight
+                msgList.scrollTop = 100000
             }
         }
     }
