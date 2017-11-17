@@ -22,7 +22,7 @@
             <mu-list>
                 <mu-sub-header>消息列表</mu-sub-header>
                 <mu-list-item :title="message.from"
-                              :describeText="message.data"
+                              :describeText="dealMessage(message)"
                               @click="chat(message)"
                               v-for="message in messages">
                     <mu-avatar src="/static/img/avatar.jpg" slot="leftAvatar"/>
@@ -113,15 +113,6 @@
                 console.log('121212')
                 console.log(roster)
                 this.roster = roster
-                //获取好友列表，并进行好友列表渲染，roster格式为：
-                /** [
-                 {
-                   jid:'asemoemo#chatdemoui_test1@easemob.com',
-                   name:'test1',
-                   subscription: 'both'
-                 }
-                 ]
-                 */
 
                 for (var i = 0, l = roster.length; i < l; i++) {
                     var ros = roster[i];
@@ -160,6 +151,23 @@
             })
         },
         methods: {
+            dealMessage(message) {
+                if (message.type == 'text') {
+                    return message.data
+                }
+                switch (message.type) {
+                    case 'red_packet':
+                        return '[微信红包]恭喜发财，大吉大利'
+                    case 'location':
+                        return '[位置]'
+                    case 'image':
+                        return '[图片]'
+                    case 'video':
+                        return '[视频]'
+                    case 'link':
+                        return '[链接]'
+                }
+            },
             toggle (flag) {
                 this.open = !this.open
                 this.docked = !flag

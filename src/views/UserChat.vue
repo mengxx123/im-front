@@ -7,7 +7,8 @@
             </mu-appbar>
         </header>
         <main class="page-body">
-            <div id="chat-msg-list" class="chat-msg-list">
+            <div class="no-message" v-if="!messages.length">没有消息</div>
+            <div id="chat-msg-list" class="chat-msg-list" :style="{'bottom': boxType === null ? '57px' : '200px'}">
                 <div v-for="message in messages">
                     <div class="time-tag" v-if="message.timeTag">
                         <mu-badge class="text" :content="message.timeTag" />
@@ -28,6 +29,11 @@
                             <img class="thumbnail" src="/static/img/red-packet.png">
                             <mu-icon value="play_arrow" color="#ffffff" :size="48"/>
                         </div>
+                        <div class="content content-link" v-else-if="message.type === 'link'" @click="viewUrl(message.data.url)">
+                            <div class="title">{{ message.data.title }}</div>
+                            <div class="text">{{ message.data.content }}</div>
+                            <img class="thumbnail" :src="message.data.image">
+                        </div>
                         <div class="content content-red-packet" v-else-if="message.type === 'red_packet'">
                             <img class="red-packet" src="/static/img/red-packet.png">
                             <div class="info">
@@ -42,35 +48,47 @@
                     </div>
                 </div>
             </div>
-            <div class="send-box">
-                <input v-model="text">
-                <button @click="send">发送</button>
-                <button @click="sendbaidu">发送百度图片</button>
-                <button @click="sendVideo">发送视频消息</button>
-                <ul class="tool-list">
+            <div class="send-box" :style="{'height': boxType === null ? '57px' : '200px'}">
+                <div class="header">
+                    <mu-text-field v-model="text" hintText="请输入内容"/>
+                    <!--<input>-->
+                    <mu-icon-button class="button" icon="tag_faces" @click="viewEmotion"/>
+                    <mu-icon-button class="button" icon="add circle outline" @click="viewTool" v-if="!text.length"/>
+                    <mu-icon-button class="button" icon="send" @click="send" v-if="text.length"/>
+                </div>
+                <ul class="tool-list" v-if="boxType === 'tool'">
                     <li class="item">
                         <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="">相册</div>
+                            <mu-icon class="icon" value="play_arrow" color="#7e57c2" :size="48" @click="sendText"/>
+                            <div class="text">发送文本</div>
+                        </div>
+                        <div class="content">
+                            <mu-icon class="icon" value="play_arrow" color="#7e57c2" :size="48" @click="sendbaidu"/>
+                            <div class="text">相册</div>
                         </div>
                     </li>
                     <li class="item">
                         <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="相册"></div>
+                            <mu-icon value="play_arrow" color="#7e57c2" :size="48" @click="sendVideo"/>
+                            <div class="text">视频</div>
                         </div>
                     </li>
                     <li class="item">
                         <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="相册"></div>
+                            <mu-icon value="play_arrow" color="#7e57c2" :size="48"/>
+                            <div class="text">相册</div>
                         </div>
                     </li>
                     <li class="item">
                         <div class="content">
-                            <mu-icon value="play_arrow" color="#f00" :size="48"/>
-                            <div class="相册"></div>
+                            <mu-icon value="play_arrow" color="#7e57c2" :size="48"/>
+                            <div class="text">相册</div>
                         </div>
+                    </li>
+                </ul>
+                <ul v-if="boxType === 'emotion'">
+                    <li v-for="emotion in emotions">
+                        <img :src="emotion.icon">
                     </li>
                 </ul>
             </div>
@@ -80,7 +98,12 @@
 </template>
 
 <script>
+    import { Toast } from 'mint-ui'
     import im from '@/util/im'
+    import asd from '@/emotions.json'
+    const emotions = asd.data
+    console.log('导入表情')
+    console.log(emotions)
 
     export default {
         data () {
@@ -90,7 +113,9 @@
                 username: 'yunser',
                 password: '123456',
                 toast: false,
-                text: 'i love you'
+                text: '',
+                boxType: null,
+                emotions: emotions
             }
         },
         mounted() {
@@ -111,11 +136,36 @@
             })
         },
         methods: {
+            viewTool() {
+                if (this.boxType === 'tool') {
+                    this.boxType = null
+                } else {
+                    this.boxType = 'tool'
+                }
+            },
+            viewEmotion() {
+                if (this.boxType === 'emotion') {
+                    this.boxType = null
+                } else {
+                    this.boxType = 'emotion'
+                }
+            },
+            viewUrl(url) {
+                window.open(url)
+            },
             viewUser() {
                 this.$router.push('/users/' + this.$route.params.id)
             },
             send() {
-                im.sendText(this.$route.params.id, this.text)
+                // TODO 发送失败处理
+                im.sendText(this.$route.params.id, this.text).then(() => {
+                    Toast('发送成功')
+                })
+                this.text = ''
+                this.scrollToBottom()
+            },
+            sendText() {
+                im.sendText(this.$route.params.id, '测试文本')
                 this.text = ''
                 this.scrollToBottom()
             },
@@ -136,11 +186,13 @@
                 this.scrollToBottom()
             },
             scrollToBottom() {
-                // 页面滚动到顶部
-                let msgList = document.getElementById('chat-msg-list')
-                console.log(msgList.offsetHeight)
-                msgList.scrollTop = msgList.scrollHeight + msgList.offsetHeight
-                msgList.scrollTop = 100000
+                setTimeout(() => {
+                    // 页面滚动到顶部
+                    let msgList = document.getElementById('chat-msg-list')
+                    console.log(msgList.offsetHeight)
+                    msgList.scrollTop = msgList.scrollHeight + msgList.offsetHeight
+                    msgList.scrollTop = 100000
+                }, 500)
             }
         }
     }

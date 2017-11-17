@@ -47,11 +47,12 @@
                 username: 'yunser',
                 password: '123456',
                 toast: false,
-
+                roster: [],
                 text: 'i love you'
             }
         },
         mounted() {
+            this.getData()
 //            let key = 'user-' + this.$route.params.id + '-message'
 //            console.log('key', key)
 //            let messages = this.$storage.get(key)
@@ -62,6 +63,24 @@
 //            this.messages = messages
         },
         methods: {
+            getData() {
+                // 获取好友列表
+                im.getFriends().then(roster => {
+                    console.log('121212')
+                    console.log(roster)
+                    this.roster = roster
+
+                    for (var i = 0, l = roster.length; i < l; i++) {
+                        var ros = roster[i];
+                        //ros.subscription值为both/to为要显示的联系人，此处与APP需保持一致，才能保证两个客户端登录后的好友列表一致
+                        if (ros.subscription === 'both' || ros.subscription === 'to') {
+
+                        }
+                    }
+                }, err => {
+                    console.log(err)
+                })
+            },
             viewUser() {
                 this.$router.push('/users/' + '1')
             },

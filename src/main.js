@@ -10,7 +10,10 @@ import storage from '@/util/storage'
 import im from '@/util/im'
 import ui from './components'
 import './scss/index.scss'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 
+Vue.use(MintUI)
 Vue.use(MuseUI)
 Vue.use(ui)
 

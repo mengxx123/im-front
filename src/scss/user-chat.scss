@@ -12,13 +12,43 @@
     background-color: #f00;
     width: 100%;
     overflow: hidden;
+    .header {
+        display: flex;
+        align-items: center;
+        height: 57px;
+        padding: 0 0.3rem;
+        background-color: #f8f8f8;
+        //input {
+        //    flex-grow: 1;
+        //    width: 4.72rem;
+        //    height: 0.76rem;
+        //    padding-left: 0.2rem;
+        //    background-color: #fff;
+        //    border-radius: 4px;
+        //    outline: none;
+        //    border: none;
+        //}
+        .button {
+            color: $primary;
+        }
+    }
 }
 /**/
 .page-user-chat {
     background-color: $bg;
+    .no-message {
+        color: $color_9;
+        text-align: center;
+        line-height: 30px;
+    }
 }
 .chat-msg-list {
-    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    //height: 400px;
     overflow: auto;
     .time-tag {
         text-align: center;
@@ -45,6 +75,28 @@
     }
     .content-text {
         background-color: #fff;
+    }
+    .content-link {
+        position: relative;
+        width: 270px;
+        height: 96px;
+        background-color: #fff;
+        .title {
+            margin-bottom: 8px;
+            line-height: 1;
+            font-size: 16px;
+        }
+        .text {
+            color: $color_9;
+        }
+        .thumbnail {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 46px;
+            height: 46px;
+            border: 1px solid $divider;
+        }
     }
     .content-img {
         padding: 0;
@@ -128,8 +180,28 @@
 }
 .tool-list {
     display: flex;
+    height: 200px;
     background-color: #fff;
     .item {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 33.3%;
+        height: 72px;
         flex-shrink: 0;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border: 1px solid $divider;
+        border-radius: $radius;
+    }
+    .text {
+        color: $color_9;
     }
 }

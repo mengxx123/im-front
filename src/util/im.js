@@ -210,6 +210,7 @@ let im = {
                 // 发送成功后，写入本地存储
                 console.log('发送测试', this.username)
                 this.addUserMessage(message, to)
+                this.addMessage(message)
                 console.log('发送完成')
                 this.callbackAll()
                 console.log('发送完成2')
@@ -302,7 +303,7 @@ let im = {
     },
     getUserMessage(name) {
         // 调试
-        if (false) {
+        if (true) {
             return [
                 {
                     id: '1',
@@ -320,6 +321,17 @@ let im = {
                     id: '1',
                     type: 'red_packet',
                     data: '恭喜发财，大吉大利',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'link',
+                    data: {
+                        title: '百度一下，你就知道',
+                        content: '值得收藏，值得转发',
+                        image: 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
+                        url: 'http://www.baidu.com'
+                    },
                     from: '15601119182'
                 },
                 {
