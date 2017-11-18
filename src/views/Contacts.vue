@@ -7,15 +7,9 @@
         </header>
         <main class="page-body">
             <mu-list>
-                <mu-list-item title="Mike Li" @click="viewUser()">
-                    <mu-avatar src="/static/img/avatar-1.png" slot="rightAvatar"/>
-                    <mu-icon value="grade" slot="left" color="pinkA200"/>
-                </mu-list-item>
-                <mu-list-item title="Maco Mai" inset>
-                    <mu-avatar src="/static/img/avatar-2.png" slot="rightAvatar"/>
-                </mu-list-item>
-                <mu-list-item title="Alex Qin" inset>
-                    <mu-avatar src="/static/img/avatar-3.png" slot="rightAvatar"/>
+                <mu-list-item :title="ro.name" @click="viewUser(ro)" v-for="(ro, index) in roster" inset>
+                    <mu-icon value="grade" slot="left" color="pinkA200" v-if="index === 0"/>
+                    <mu-avatar src="/static/img/avatar.jpg" slot="rightAvatar"/>
                 </mu-list-item>
             </mu-list>
             <mu-divider inset/>
@@ -81,8 +75,8 @@
                     console.log(err)
                 })
             },
-            viewUser() {
-                this.$router.push('/users/' + '1')
+            viewUser(ro) {
+                this.$router.push('/users/' + ro.name)
             },
             send() {
                 im.send(this.$route.params.id, this.text)

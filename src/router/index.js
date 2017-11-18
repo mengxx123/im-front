@@ -9,6 +9,9 @@ const UserDetail = resolve => require(['@/views/UserDetail'], resolve)
 const GroupChat = resolve => require(['@/views/GroupChat'], resolve)
 const Contacts = resolve => require(['@/views/Contacts'], resolve)
 const Mine = resolve => require(['@/views/Mine'], resolve)
+const Settings = resolve => require(['@/views/im/Settings'], resolve)
+const About = resolve => require(['@/views/im/About'], resolve)
+const Help = resolve => require(['@/views/im/Help'], resolve)
 
 Vue.use(Router)
 
@@ -42,6 +45,15 @@ export default new Router({
         }, {
             path: '/mine',
             component: Mine
+        }, {
+            path: '/settings',
+            component: Settings
+        }, {
+            path: '/about',
+            component: About
+        }, {
+            path: '/help',
+            component: Help
         }
     ]
 })

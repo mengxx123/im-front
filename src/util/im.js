@@ -303,7 +303,7 @@ let im = {
     },
     getUserMessage(name) {
         // 调试
-        if (true) {
+        if (false) {
             return [
                 {
                     id: '1',
@@ -315,6 +315,12 @@ let im = {
                     id: '1',
                     type: 'asd',
                     data: '100',
+                    from: '15601119182'
+                },
+                {
+                    id: '1',
+                    type: 'audio',
+                    data: '恭喜发财，大吉大利',
                     from: '15601119182'
                 },
                 {
@@ -338,6 +344,7 @@ let im = {
                     id: '1',
                     type: 'location',
                     data: {
+                        address: '海珠区琶洲保利天悦·叁悦广场西北',
                         longitude: 113.388866,
                         latitude: 23.108985,
                         image: 'http://api.map.baidu.com/staticimage/v2?ak=WMw0x6K1pOpQhlNmKOZK0GUP&mcode=666666&center=113.388866,23.108985&width=300&height=200&zoom=13'

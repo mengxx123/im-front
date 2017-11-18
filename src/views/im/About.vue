@@ -1,83 +1,13 @@
 <template>
     <div class="page page-home">
         <header class="page-header">
-            <mu-appbar title="微信">
-                <mu-icon-button icon="menu" slot="left"  @click="toggle(true)"/>
-                <mu-icon-button icon="search" slot="right"/>
-                <mu-icon-menu icon="add" slot="right">
-                    <mu-menu-item title="发起群聊"/>
-                    <mu-menu-item title="添加朋友"/>
-                    <mu-menu-item title="扫一扫"/>
-                    <mu-menu-item title="收付款"/>
-                    <mu-menu-item title="帮助与反馈" to="/help"/>
-                </mu-icon-menu>
+            <mu-appbar title="关于">
+                <mu-icon-button icon="arrow_back" slot="left" @click="$router.go(-1)" />
             </mu-appbar>
         </header>
-        <div class="page-body">
-            <router-link to="/register">注册</router-link>
-            <router-link to="/login">登录</router-link>
+        <main class="page-body">
 
-            <input v-model="name" placeholder="好友账号">
-            <button @click="addFriend">添加好友</button>
-            <mu-list>
-                <mu-sub-header>消息列表</mu-sub-header>
-                <mu-list-item :title="message.from"
-                              :describeText="dealMessage(message)"
-                              @click="chat(message)"
-                              v-for="message in messages">
-                    <mu-avatar src="/static/img/avatar.jpg" slot="leftAvatar"/>
-
-                    <mu-icon value="delete" slot="right" @click.native="removeMessage($event, message)"/>
-                </mu-list-item>
-            </mu-list>
-            <mu-list>
-                <mu-sub-header>好友</mu-sub-header>
-                <mu-list-item :title="ro.name" @click="chatTo(ro)" v-for="ro in roster">
-                    <mu-avatar src="/static/img/avatar.jpg" slot="leftAvatar"/>
-                    <mu-icon value="chat_bubble" slot="right"/>
-                </mu-list-item>
-            </mu-list>
-            <div v-if="!roster.length">
-                <div>你还没有任何好友</div>
-            </div>
-            <mu-divider/>
-            <mu-list>
-                <mu-sub-header>群组</mu-sub-header>
-                <mu-list-item :title="group.groupname" v-for="group in groups" @click="groupChat(group)">
-                    <mu-avatar src="/images/avatar5.jpg" slot="leftAvatar"/>
-                    {{ group.id }}
-                    <mu-icon value="chat_bubble" slot="right"/>
-                </mu-list-item>
-            </mu-list>
-        </div>
-        <ui-footer></ui-footer>
-        <mu-drawer :open="open" :docked="docked" @close="toggle()">
-            <mu-list @itemClick="docked ? '' : toggle()">
-                <mu-list-item title="个人资料">
-                    <mu-icon value="chat_bubble" slot="left"/>
-                </mu-list-item>
-                <mu-list-item title="相册">
-                    <mu-icon value="photo" slot="left"/>
-                </mu-list-item>
-                <mu-list-item title="收藏">
-                    <mu-icon value="collections" slot="left"/>
-                </mu-list-item>
-                <mu-list-item title="表情">
-                    <mu-icon value="tag_faces" slot="left"/>
-                </mu-list-item>
-                <mu-list-item title="表情">
-                    <mu-icon value="chat_bubble" slot="left"/>
-                </mu-list-item>
-                <mu-list-item title="钱包">
-                    <mu-icon value="chat_bubble" slot="left"/>
-                </mu-list-item>
-                <mu-list-item title="设置" to="/settings">
-                    <mu-icon value="chat_bubble" slot="left"/>
-                    <mu-badge content="new" slot="after" secondary />
-                </mu-list-item>
-                <mu-list-item v-if="docked" @click.native="open = false" title="Close"/>
-            </mu-list>
-        </mu-drawer>
+        </main>
     </div>
 </template>
 

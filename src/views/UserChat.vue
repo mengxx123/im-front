@@ -21,8 +21,8 @@
                         <div class="content content-img" v-else-if="message.type === 'image'">
                             <img :src="message.data">
                         </div>
-                        <div class="content content-location" v-else-if="message.type === 'location'">
-                            <div class="address">海珠区琶洲保利天悦·叁悦广场西北</div>
+                        <div class="content content-location" v-else-if="message.type === 'location'" @click="viewLocation(message)">
+                            <div class="address">{{ message.data.address }}</div>
                             <img class="img" :src="message.data.image">
                         </div>
                         <div class="content content-video" v-else-if="message.type === 'video'">
@@ -40,6 +40,10 @@
                                 <div class="text">{{ message.data }}</div>
                                 <div class="view">查看红包</div>
                             </div>
+                        </div>
+                        <div class="content content-audio" v-else-if="message.type === 'audio'">
+                            <img class="sound" src="/static/img/red-packet.png">
+                            <div>3s</div>
                         </div>
                         <div class="content content-unknown" v-else>
                             <div>未知类型的消息</div>
@@ -136,6 +140,9 @@
             })
         },
         methods: {
+            viewLocation(message) {
+                window.open('')
+            },
             viewTool() {
                 if (this.boxType === 'tool') {
                     this.boxType = null
