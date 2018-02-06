@@ -98,7 +98,7 @@
 </template>
 
 <script>
-    import { Toast } from 'mint-ui'
+    // import { Toast } from 'mint-ui'
     import im from '@/util/im'
     import asd from '@/emotions.json'
     const emotions = asd.data
@@ -159,7 +159,7 @@
             send() {
                 // TODO 发送失败处理
                 im.sendText(this.$route.params.id, this.text).then(() => {
-                    Toast('发送成功')
+                    // Toast('发送成功')
                 })
                 this.text = ''
                 this.scrollToBottom()

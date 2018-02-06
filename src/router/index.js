@@ -9,6 +9,8 @@ const UserDetail = resolve => require(['@/views/UserDetail'], resolve)
 const GroupChat = resolve => require(['@/views/GroupChat'], resolve)
 const Contacts = resolve => require(['@/views/Contacts'], resolve)
 const Mine = resolve => require(['@/views/Mine'], resolve)
+const Chatroom = resolve => require(['@/views/Chatroom'], resolve)
+const Chatlog = resolve => require(['@/views/Chatlog'], resolve)
 
 Vue.use(Router)
 
@@ -42,6 +44,14 @@ export default new Router({
         }, {
             path: '/mine',
             component: Mine
+        },
+        {
+            path: '/chatroom',
+            component: Chatroom
+        },
+        {
+            path: '/chatlog',
+            component: Chatlog
         }
     ]
 })
