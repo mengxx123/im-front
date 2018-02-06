@@ -11,6 +11,7 @@ const Contacts = resolve => require(['@/views/Contacts'], resolve)
 const Mine = resolve => require(['@/views/Mine'], resolve)
 const Chatroom = resolve => require(['@/views/Chatroom'], resolve)
 const Chatlog = resolve => require(['@/views/Chatlog'], resolve)
+const Db = resolve => require(['@/views/Db'], resolve)
 
 Vue.use(Router)
 
@@ -52,6 +53,10 @@ export default new Router({
         {
             path: '/chatlog',
             component: Chatlog
+        },
+        {
+            path: '/db',
+            component: Db
         }
     ]
 })
