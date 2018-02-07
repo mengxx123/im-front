@@ -1,14 +1,6 @@
 <template>
-    <div class="page page-home">
-        <header class="page-header">
-            <mu-appbar title="关于">
-                <mu-icon-button icon="arrow_back" slot="left" @click="$router.go(-1)" />
-            </mu-appbar>
-        </header>
-        <main class="page-body">
-
-        </main>
-    </div>
+    <my-page title="关于" backable>
+    </my-page>
 </template>
 
 <script>

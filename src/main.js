@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
@@ -13,9 +11,18 @@ import './scss/index.scss'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
+// TODO 删除
 Vue.use(MintUI)
 Vue.use(MuseUI)
 Vue.use(ui)
+
+// 全部加载
+import YunserUI from 'yunser-ui-vue'
+import 'yunser-ui-vue/dist/yunser-ui.css'
+import './scss/main.scss'
+
+// 全部加载
+Vue.use(YunserUI)
 
 // import './sdk/dist/strophe-1.2.8.min'
 Vue.config.productionTip = false

@@ -1,20 +1,13 @@
 <template>
-    <div class="page-register">
-        <mu-appbar title="登录">
-            <mu-icon-button icon="menu" slot="left"/>
-        </mu-appbar>
-        <div class="page-body">
-            <div>
-                <div>
-                    <h2>登录</h2>
-                    <mu-text-field v-model="username" hintText="提示文字"/><br/>
-                    <mu-text-field v-model="username" hintText="提示文字"/><br/>
-                    <mu-flat-button icon="android" class="demo-flat-button" label="登录" @click="login" backgroundColor="#a4c639" color="#FFF" />
-                </div>
-            </div>
+    <my-page title="登录">
+        <div>
+            <h2>登录</h2>
+            <mu-text-field v-model="username" hintText="提示文字"/><br/>
+            <mu-text-field v-model="username" hintText="提示文字"/><br/>
+            <mu-flat-button icon="android" class="demo-flat-button" label="登录" @click="login" backgroundColor="#a4c639" color="#FFF" />
         </div>
         <mu-toast v-if="toast" message="注册失败" @close="hideToast"/>
-    </div>
+    </my-page>
 </template>
 
 <script>
@@ -58,8 +51,6 @@
     }
 </script>
 
-<style scoped="">
-    .page-body {
-        padding: 0 40px;
-    }
+<style lang="scss" scoped>
+
 </style>

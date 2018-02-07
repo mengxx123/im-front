@@ -18,7 +18,8 @@
     "underscore": "^1.8.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.0"
+    "vuex": "^3.0.0",
+    "yunser-ui-vue": "0.1.25"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

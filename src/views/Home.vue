@@ -1,5 +1,5 @@
 <template>
-    <div class="page page-home">
+    <my-page title="首页">
         <header class="page-header">
             <mu-appbar title="微信">
                 <mu-icon-button icon="menu" slot="left"  @click="toggle(true)"/>
@@ -78,7 +78,7 @@
                 <mu-list-item v-if="docked" @click.native="open = false" title="Close"/>
             </mu-list>
         </mu-drawer>
-    </div>
+    </my-page>
 </template>
 
 <script>
