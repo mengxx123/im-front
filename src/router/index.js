@@ -13,6 +13,9 @@ const Settings = resolve => require(['@/views/im/Settings'], resolve)
 const About = resolve => require(['@/views/im/About'], resolve)
 const Help = resolve => require(['@/views/im/Help'], resolve)
 const Demo = resolve => require(['@/views/Demo'], resolve)
+const Chatroom = resolve => require(['@/views/Chatroom'], resolve)
+const Chatlog = resolve => require(['@/views/Chatlog'], resolve)
+const Db = resolve => require(['@/views/Db'], resolve)
 
 Vue.use(Router)
 
@@ -61,6 +64,18 @@ export default new Router({
         }, {
             path: '/help',
             component: Help
+        },
+        {
+            path: '/chatroom',
+            component: Chatroom
+        },
+        {
+            path: '/chatlog',
+            component: Chatlog
+        },
+        {
+            path: '/db',
+            component: Db
         }
     ]
 })

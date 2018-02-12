@@ -3,23 +3,13 @@
         <div slot="drawer">
             <ui-appbar title=""></ui-appbar>
             <ui-list @itemClick="toggle()">
-                <ui-list-item title="调色板" to="/">
+                <ui-list-item title="首页" to="/">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
-                <ui-list-item title="配色" to="/colorScheme">
+                <ui-list-item title="聊天室" to="/chatroom">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
-                <ui-list-item title="渐变" to="/gradient">
-                    <ui-icon slot="left" value="grade"/>
-                </ui-list-item>
-                <ui-divider />
-                <ui-list-item title="中国传统色彩" to="/color/chinese">
-                    <ui-icon slot="left" value="grade"/>
-                </ui-list-item>
-                <ui-list-item title="日本传统色彩" to="/color/japen">
-                    <ui-icon slot="left" value="grade"/>
-                </ui-list-item>
-                <ui-list-item title="Material Design 颜色" to="/color/materialDesign">
+                <ui-list-item title="帮助" to="/help">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
                 <ui-list-item title="关于" to="/about">

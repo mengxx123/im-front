@@ -1,45 +1,40 @@
 <template>
-    <div class="page-register">
-        <mu-appbar title="我">
-            <mu-icon-button icon="menu" slot="left"/>
-        </mu-appbar>
-        <div class="page-body">
-            <div>
-                <mu-list>
-                    <mu-list-item title="朋友圈">
-                        <mu-icon value="grade" slot="left" color="pinkA200"/>
-                    </mu-list-item>
-                </mu-list>
-                <mu-divider inset/>
-                <mu-list>
-                    <mu-list-item title="扫一扫" inset>
-                        <mu-icon value="grade" slot="left" color="pinkA200"/>
-                    </mu-list-item>
-                    <mu-list-item title="摇一摇" inset>
-                        <mu-icon value="grade" slot="left" color="pinkA200"/>
-                    </mu-list-item>
-                </mu-list>
-                <mu-divider inset/>
-                <mu-list>
-                    <mu-list-item title="附近的人" inset>
-                        <mu-icon value="grade" slot="left" color="pinkA200"/>
-                    </mu-list-item>
-                    <mu-list-item title="漂流瓶" inset>
-                        <mu-icon value="grade" slot="left" color="pinkA200"/>
-                    </mu-list-item>
-                </mu-list>
-                <mu-divider inset/>
-                <mu-list>
-                    <mu-list-item title="购物" inset>
-                        <mu-icon value="grade" slot="left" color="pinkA200"/>
-                        <mu-badge content="new" slot="after" secondary />
-                    </mu-list-item>
-                </mu-list>
-            </div>
+    <my-page title="我">
+        <div>
+            <mu-list>
+                <mu-list-item title="朋友圈">
+                    <mu-icon value="grade" slot="left" color="pinkA200"/>
+                </mu-list-item>
+            </mu-list>
+            <mu-divider inset/>
+            <mu-list>
+                <mu-list-item title="扫一扫" inset>
+                    <mu-icon value="grade" slot="left" color="pinkA200"/>
+                </mu-list-item>
+                <mu-list-item title="摇一摇" inset>
+                    <mu-icon value="grade" slot="left" color="pinkA200"/>
+                </mu-list-item>
+            </mu-list>
+            <mu-divider inset/>
+            <mu-list>
+                <mu-list-item title="附近的人" inset>
+                    <mu-icon value="grade" slot="left" color="pinkA200"/>
+                </mu-list-item>
+                <mu-list-item title="漂流瓶" inset>
+                    <mu-icon value="grade" slot="left" color="pinkA200"/>
+                </mu-list-item>
+            </mu-list>
+            <mu-divider inset/>
+            <mu-list>
+                <mu-list-item title="购物" inset>
+                    <mu-icon value="grade" slot="left" color="pinkA200"/>
+                    <mu-badge content="new" slot="after" secondary />
+                </mu-list-item>
+            </mu-list>
         </div>
         <ui-footer></ui-footer>
         <mu-toast v-if="toast" message="注册失败" @close="hideToast"/>
-    </div>
+    </my-page>
 </template>
 
 <script>
